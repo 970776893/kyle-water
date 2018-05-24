@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- log4j2使用说明（create By SeanXiao    ）：
+使用方式如下：
+private static final Logger logger = LogManager.getLogger(实际类名.class.getName());
+
+2、日志说明：
+（1）请根据实际情况配置各项参数
+（2）需要注意日志文件备份数和日志文件大小，注意预留目录空间
+（3）实际部署的时候backupFilePatch变量需要修改成linux目录
+ -->
+<Configuration status="error">
+    <Properties>
+        <Property name="logName">water</Property>
+        <Property name="systemLogName">system</Property>
+        <Property name="logDir">${sys:catalina.home}/logs/water</Property>
+        <Property name="logPattern">%d{DEFAULT} [%-22t] %highlight{%-5p} %-40c{1.} %-3L %-15M %m%n%ex</Property>
+        <Property name="fileCharset">utf-8</Property>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout charset="${fileCharset}" pattern="${logPattern}"/>
+        </Console>
+
+        <RollingFile name="WaterLog" fileName="${logDir}/${logName}.log" filePattern="${logDir}/$${date:yyyy-MM}/${logName}-%d{yyyyMMddHHmmssSSS}.log.gz">
+            <ThresholdFilter level="trace" />
+            <PatternLayout charset="${fileCharset}" pattern="${logPattern}"/>
+
+            <SizeBasedTriggeringPolicy size="100 MB"/>
+            <DefaultRolloverStrategy max="100"/>
+
+        </RollingFile>
+
+        <RollingFile name="SystemLog" fileName="${logDir}/${systemLogName}.log" filePattern="${logDir}/$${date:yyyy-MM}/${systemLogName}-%d{yyyyMMddHHmmssSSS}.log.gz">
+            <ThresholdFilter level="trace" />
+            <PatternLayout charset="${fileCharset}" pattern="${logPattern}"/>
+
+            <SizeBasedTriggeringPolicy size="100 MB"/>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+
+        <AsyncLogger name="com.kyle.framework" level="trace" additivity="true">
+            <AppenderRef ref="SystemLog"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="com.kyle.water" level="trace" additivity="true">
+            <AppenderRef ref="WaterLog"/>
+        </AsyncLogger>
+
+        <Root level="error" includeLocation="true">
+            <appender-ref ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
