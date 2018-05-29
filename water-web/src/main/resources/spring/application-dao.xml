@@ -16,7 +16,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:config.xml"></property>
-        <property name="mapperLocations" value="classpath:mapper/mapper_test.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/mapper_*.xml"/>
     </bean>
 
     <!-- 对dataSource 数据源进行事务管理 -->
