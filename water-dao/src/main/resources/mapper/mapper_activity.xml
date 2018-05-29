@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kyle.water.activity.dao.IActivityDao">
+
+    <resultMap id="ActivityMap" type="com.kyle.water.activity.entity.ActivityEntity">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="BIGINT"/>
+        <result column="end_time" property="endTime" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="send_result_msg" property="sendResultMsg" jdbcType="TINYINT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="create_at" property="createAt" jdbcType="BIGINT"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="update_at" property="updateAt" jdbcType="BIGINT"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+        <result column="is_del" property="isDel" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <sql id="orderById">
+        order by id desc
+    </sql>
+
+    <sql id="pageParams">
+        <if test="id != null">
+            and t.id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="code != null">
+            and t.code = #{code,jdbcType=VARCHAR}
+        </if>
+         <if test="codeLike != null">
+                 and t.code like concat( '%', #{codeLike,jdbcType=VARCHAR}, '%')
+         </if>
+        <if test="name != null">
+            and t.name = #{name,jdbcType=VARCHAR}
+        </if>
+         <if test="nameLike != null">
+                 and t.name like concat( '%', #{nameLike,jdbcType=VARCHAR}, '%')
+         </if>
+        <if test="title != null">
+            and t.title = #{title,jdbcType=VARCHAR}
+        </if>
+         <if test="titleLike != null">
+                 and t.title like concat( '%', #{titleLike,jdbcType=VARCHAR}, '%')
+         </if>
+        <if test="startTime != null">
+            and t.start_time = #{startTime,jdbcType=BIGINT}
+        </if>
+        <if test="endTime != null">
+            and t.end_time = #{endTime,jdbcType=BIGINT}
+        </if>
+        <if test="status != null">
+            and t.status = #{status,jdbcType=TINYINT}
+        </if>
+        <if test="sendResultMsg != null">
+            and t.send_result_msg = #{sendResultMsg,jdbcType=TINYINT}
+        </if>
+        <if test="type != null">
+            and t.type = #{type,jdbcType=TINYINT}
+        </if>
+        <if test="createAt != null">
+            and t.create_at = #{createAt,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and t.create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createName != null">
+            and t.create_name = #{createName,jdbcType=VARCHAR}
+        </if>
+        <if test="updateAt != null">
+            and t.update_at = #{updateAt,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and t.update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateName != null">
+            and t.update_name = #{updateName,jdbcType=VARCHAR}
+        </if>
+        <if test="isDel != null">
+            and t.is_del = #{isDel,jdbcType=BOOLEAN}
+        </if>
+        <if test="isDel == null">
+            and t.is_del = 0
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="com.kyle.water.activity.entity.ActivityEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into activity (
+            <trim suffix="" suffixOverrides=",">
+                    id,
+                    code,
+                    name,
+                    title,
+                    start_time,
+                    end_time,
+                    status,
+                    send_result_msg,
+                    type,
+                    create_at,
+                    create_by,
+                    create_name,
+                    update_at,
+                    update_by,
+                    update_name,
+                    is_del,
+            </trim>
+        )
+        values (
+            <trim suffix="" suffixOverrides=",">
+                #{id, jdbcType=BIGINT},
+                #{code, jdbcType=VARCHAR},
+                #{name, jdbcType=VARCHAR},
+                #{title, jdbcType=VARCHAR},
+                #{startTime, jdbcType=BIGINT},
+                #{endTime, jdbcType=BIGINT},
+                #{status, jdbcType=TINYINT},
+                #{sendResultMsg, jdbcType=TINYINT},
+                #{type, jdbcType=TINYINT},
+                #{createAt, jdbcType=BIGINT},
+                #{createBy, jdbcType=VARCHAR},
+                #{createName, jdbcType=VARCHAR},
+                #{updateAt, jdbcType=BIGINT},
+                #{updateBy, jdbcType=VARCHAR},
+                #{updateName, jdbcType=VARCHAR},
+                #{isDel, jdbcType=BOOLEAN},
+            </trim>
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.kyle.water.activity.entity.ActivityEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into activity (
+            <trim suffix="" suffixOverrides=",">
+                <if test="id != null">
+                    id,
+                </if>
+                <if test="code != null">
+                    code,
+                </if>
+                <if test="name != null">
+                    name,
+                </if>
+                <if test="title != null">
+                    title,
+                </if>
+                <if test="startTime != null">
+                    start_time,
+                </if>
+                <if test="endTime != null">
+                    end_time,
+                </if>
+                <if test="status != null">
+                    status,
+                </if>
+                <if test="sendResultMsg != null">
+                    send_result_msg,
+                </if>
+                <if test="type != null">
+                    type,
+                </if>
+                <if test="createAt != null">
+                    create_at,
+                </if>
+                <if test="createBy != null">
+                    create_by,
+                </if>
+                <if test="createName != null">
+                    create_name,
+                </if>
+                <if test="updateAt != null">
+                    update_at,
+                </if>
+                <if test="updateBy != null">
+                    update_by,
+                </if>
+                <if test="updateName != null">
+                    update_name,
+                </if>
+                <if test="isDel != null">
+                    is_del,
+                </if>
+            </trim>
+        )
+        values (
+        <trim suffix="" suffixOverrides=",">
+            <if test="id != null">
+                #{id, jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code, jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name, jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title, jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime, jdbcType=BIGINT},
+            </if>
+            <if test="endTime != null">
+                #{endTime, jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status, jdbcType=TINYINT},
+            </if>
+            <if test="sendResultMsg != null">
+                #{sendResultMsg, jdbcType=TINYINT},
+            </if>
+            <if test="type != null">
+                #{type, jdbcType=TINYINT},
+            </if>
+            <if test="createAt != null">
+                #{createAt, jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy, jdbcType=VARCHAR},
+            </if>
+            <if test="createName != null">
+                #{createName, jdbcType=VARCHAR},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt, jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy, jdbcType=VARCHAR},
+            </if>
+            <if test="updateName != null">
+                #{updateName, jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null">
+                #{isDel, jdbcType=BOOLEAN},
+            </if>
+        </trim>
+        )
+    </insert>
+
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="ActivityMap">
+        SELECT t.*
+        FROM activity t
+        WHERE t.id = #{id}
+    </select>
+
+    <select id="countByParams" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM activity t
+        WHERE 1=1
+        <include refid="pageParams"></include>
+    </select>
+
+    <select id="listByParams" parameterType="java.util.HashMap" resultMap="ActivityMap">
+        SELECT  t.*
+        FROM activity t
+        WHERE 1=1
+        <include refid="pageParams"></include>
+        <include refid="orderById"></include>
+        <if test="offset != null and size !=null">
+            limit #{offset}, #{size}
+        </if>
+    </select>
+
+    <update id="updateSelectiveById" parameterType="com.kyle.water.activity.entity.ActivityEntity">
+        update activity t set
+            <trim suffix="" suffixOverrides=",">
+                <if test="code != null">
+                t.code = #{code,jdbcType=VARCHAR},
+                </if>
+                <if test="name != null">
+                t.name = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="title != null">
+                t.title = #{title,jdbcType=VARCHAR},
+                </if>
+                <if test="startTime != null">
+                t.start_time = #{startTime,jdbcType=BIGINT},
+                </if>
+                <if test="endTime != null">
+                t.end_time = #{endTime,jdbcType=BIGINT},
+                </if>
+                <if test="status != null">
+                t.status = #{status,jdbcType=TINYINT},
+                </if>
+                <if test="sendResultMsg != null">
+                t.send_result_msg = #{sendResultMsg,jdbcType=TINYINT},
+                </if>
+                <if test="type != null">
+                t.type = #{type,jdbcType=TINYINT},
+                </if>
+                <if test="createAt != null">
+                t.create_at = #{createAt,jdbcType=BIGINT},
+                </if>
+                <if test="createBy != null">
+                t.create_by = #{createBy,jdbcType=VARCHAR},
+                </if>
+                <if test="createName != null">
+                t.create_name = #{createName,jdbcType=VARCHAR},
+                </if>
+                <if test="updateAt != null">
+                t.update_at = #{updateAt,jdbcType=BIGINT},
+                </if>
+                <if test="updateBy != null">
+                t.update_by = #{updateBy,jdbcType=VARCHAR},
+                </if>
+                <if test="updateName != null">
+                t.update_name = #{updateName,jdbcType=VARCHAR},
+                </if>
+                <if test="isDel != null">
+                t.is_del = #{isDel,jdbcType=BOOLEAN},
+                </if>
+            </trim>
+        where t.id = #{id}
+    </update>
+
+    <update id="deleteById" parameterType="java.lang.Long">
+        update activity t set
+            t.is_del = 1
+        where t.id = #{id}
+    </update>
+
+</mapper>

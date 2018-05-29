@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kyle.water.activityEnrollField.dao.IActivityEnrollFieldDao">
+
+    <resultMap id="ActivityEnrollFieldMap" type="com.kyle.water.activityEnrollField.entity.ActivityEnrollFieldEntity">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="activity_code" property="activityCode" jdbcType="VARCHAR"/>
+        <result column="label_name" property="labelName" jdbcType="VARCHAR"/>
+        <result column="filed_type" property="filedType" jdbcType="TINYINT"/>
+        <result column="dictionary_group_code" property="dictionaryGroupCode" jdbcType="VARCHAR"/>
+        <result column="index" property="index" jdbcType="INTEGER"/>
+        <result column="is_secrecy" property="isSecrecy" jdbcType="BOOLEAN"/>
+        <result column="is_key" property="isKey" jdbcType="BOOLEAN"/>
+        <result column="is_required" property="isRequired" jdbcType="BOOLEAN"/>
+        <result column="min" property="min" jdbcType="INTEGER"/>
+        <result column="max" property="max" jdbcType="INTEGER"/>
+        <result column="pattern" property="pattern" jdbcType="VARCHAR"/>
+        <result column="create_at" property="createAt" jdbcType="BIGINT"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="update_at" property="updateAt" jdbcType="BIGINT"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+        <result column="is_del" property="isDel" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <sql id="orderById">
+        order by id desc
+    </sql>
+
+    <sql id="pageParams">
+        <if test="id != null">
+            and t.id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="activityCode != null">
+            and t.activity_code = #{activityCode,jdbcType=VARCHAR}
+        </if>
+         <if test="activityCodeLike != null">
+                 and t.activity_code like concat( '%', #{activityCodeLike,jdbcType=VARCHAR}, '%')
+         </if>
+        <if test="labelName != null">
+            and t.label_name = #{labelName,jdbcType=VARCHAR}
+        </if>
+         <if test="labelNameLike != null">
+                 and t.label_name like concat( '%', #{labelNameLike,jdbcType=VARCHAR}, '%')
+         </if>
+        <if test="filedType != null">
+            and t.filed_type = #{filedType,jdbcType=TINYINT}
+        </if>
+        <if test="dictionaryGroupCode != null">
+            and t.dictionary_group_code = #{dictionaryGroupCode,jdbcType=VARCHAR}
+        </if>
+         <if test="dictionaryGroupCodeLike != null">
+                 and t.dictionary_group_code like concat( '%', #{dictionaryGroupCodeLike,jdbcType=VARCHAR}, '%')
+         </if>
+        <if test="index != null">
+            and t.index = #{index,jdbcType=INTEGER}
+        </if>
+        <if test="isSecrecy != null">
+            and t.is_secrecy = #{isSecrecy,jdbcType=BOOLEAN}
+        </if>
+        <if test="isKey != null">
+            and t.is_key = #{isKey,jdbcType=BOOLEAN}
+        </if>
+        <if test="isRequired != null">
+            and t.is_required = #{isRequired,jdbcType=BOOLEAN}
+        </if>
+        <if test="min != null">
+            and t.min = #{min,jdbcType=INTEGER}
+        </if>
+        <if test="max != null">
+            and t.max = #{max,jdbcType=INTEGER}
+        </if>
+        <if test="pattern != null">
+            and t.pattern = #{pattern,jdbcType=VARCHAR}
+        </if>
+         <if test="patternLike != null">
+                 and t.pattern like concat( '%', #{patternLike,jdbcType=VARCHAR}, '%')
+         </if>
+        <if test="createAt != null">
+            and t.create_at = #{createAt,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and t.create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createName != null">
+            and t.create_name = #{createName,jdbcType=VARCHAR}
+        </if>
+        <if test="updateAt != null">
+            and t.update_at = #{updateAt,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and t.update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateName != null">
+            and t.update_name = #{updateName,jdbcType=VARCHAR}
+        </if>
+        <if test="isDel != null">
+            and t.is_del = #{isDel,jdbcType=BOOLEAN}
+        </if>
+        <if test="isDel == null">
+            and t.is_del = 0
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="com.kyle.water.activityEnrollField.entity.ActivityEnrollFieldEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into activity_enroll_field (
+            <trim suffix="" suffixOverrides=",">
+                    id,
+                    activity_code,
+                    label_name,
+                    filed_type,
+                    dictionary_group_code,
+                    index,
+                    is_secrecy,
+                    is_key,
+                    is_required,
+                    min,
+                    max,
+                    pattern,
+                    create_at,
+                    create_by,
+                    create_name,
+                    update_at,
+                    update_by,
+                    update_name,
+                    is_del,
+            </trim>
+        )
+        values (
+            <trim suffix="" suffixOverrides=",">
+                #{id, jdbcType=BIGINT},
+                #{activityCode, jdbcType=VARCHAR},
+                #{labelName, jdbcType=VARCHAR},
+                #{filedType, jdbcType=TINYINT},
+                #{dictionaryGroupCode, jdbcType=VARCHAR},
+                #{index, jdbcType=INTEGER},
+                #{isSecrecy, jdbcType=BOOLEAN},
+                #{isKey, jdbcType=BOOLEAN},
+                #{isRequired, jdbcType=BOOLEAN},
+                #{min, jdbcType=INTEGER},
+                #{max, jdbcType=INTEGER},
+                #{pattern, jdbcType=VARCHAR},
+                #{createAt, jdbcType=BIGINT},
+                #{createBy, jdbcType=VARCHAR},
+                #{createName, jdbcType=VARCHAR},
+                #{updateAt, jdbcType=BIGINT},
+                #{updateBy, jdbcType=VARCHAR},
+                #{updateName, jdbcType=VARCHAR},
+                #{isDel, jdbcType=BOOLEAN},
+            </trim>
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.kyle.water.activityEnrollField.entity.ActivityEnrollFieldEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into activity_enroll_field (
+            <trim suffix="" suffixOverrides=",">
+                <if test="id != null">
+                    id,
+                </if>
+                <if test="activityCode != null">
+                    activity_code,
+                </if>
+                <if test="labelName != null">
+                    label_name,
+                </if>
+                <if test="filedType != null">
+                    filed_type,
+                </if>
+                <if test="dictionaryGroupCode != null">
+                    dictionary_group_code,
+                </if>
+                <if test="index != null">
+                    index,
+                </if>
+                <if test="isSecrecy != null">
+                    is_secrecy,
+                </if>
+                <if test="isKey != null">
+                    is_key,
+                </if>
+                <if test="isRequired != null">
+                    is_required,
+                </if>
+                <if test="min != null">
+                    min,
+                </if>
+                <if test="max != null">
+                    max,
+                </if>
+                <if test="pattern != null">
+                    pattern,
+                </if>
+                <if test="createAt != null">
+                    create_at,
+                </if>
+                <if test="createBy != null">
+                    create_by,
+                </if>
+                <if test="createName != null">
+                    create_name,
+                </if>
+                <if test="updateAt != null">
+                    update_at,
+                </if>
+                <if test="updateBy != null">
+                    update_by,
+                </if>
+                <if test="updateName != null">
+                    update_name,
+                </if>
+                <if test="isDel != null">
+                    is_del,
+                </if>
+            </trim>
+        )
+        values (
+        <trim suffix="" suffixOverrides=",">
+            <if test="id != null">
+                #{id, jdbcType=BIGINT},
+            </if>
+            <if test="activityCode != null">
+                #{activityCode, jdbcType=VARCHAR},
+            </if>
+            <if test="labelName != null">
+                #{labelName, jdbcType=VARCHAR},
+            </if>
+            <if test="filedType != null">
+                #{filedType, jdbcType=TINYINT},
+            </if>
+            <if test="dictionaryGroupCode != null">
+                #{dictionaryGroupCode, jdbcType=VARCHAR},
+            </if>
+            <if test="index != null">
+                #{index, jdbcType=INTEGER},
+            </if>
+            <if test="isSecrecy != null">
+                #{isSecrecy, jdbcType=BOOLEAN},
+            </if>
+            <if test="isKey != null">
+                #{isKey, jdbcType=BOOLEAN},
+            </if>
+            <if test="isRequired != null">
+                #{isRequired, jdbcType=BOOLEAN},
+            </if>
+            <if test="min != null">
+                #{min, jdbcType=INTEGER},
+            </if>
+            <if test="max != null">
+                #{max, jdbcType=INTEGER},
+            </if>
+            <if test="pattern != null">
+                #{pattern, jdbcType=VARCHAR},
+            </if>
+            <if test="createAt != null">
+                #{createAt, jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy, jdbcType=VARCHAR},
+            </if>
+            <if test="createName != null">
+                #{createName, jdbcType=VARCHAR},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt, jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy, jdbcType=VARCHAR},
+            </if>
+            <if test="updateName != null">
+                #{updateName, jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null">
+                #{isDel, jdbcType=BOOLEAN},
+            </if>
+        </trim>
+        )
+    </insert>
+
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="ActivityEnrollFieldMap">
+        SELECT t.*
+        FROM activity_enroll_field t
+        WHERE t.id = #{id}
+    </select>
+
+    <select id="countByParams" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM activity_enroll_field t
+        WHERE 1=1
+        <include refid="pageParams"></include>
+    </select>
+
+    <select id="listByParams" parameterType="java.util.HashMap" resultMap="ActivityEnrollFieldMap">
+        SELECT  t.*
+        FROM activity_enroll_field t
+        WHERE 1=1
+        <include refid="pageParams"></include>
+        <include refid="orderById"></include>
+        <if test="offset != null and size !=null">
+            limit #{offset}, #{size}
+        </if>
+    </select>
+
+    <update id="updateSelectiveById" parameterType="com.kyle.water.activityEnrollField.entity.ActivityEnrollFieldEntity">
+        update activity_enroll_field t set
+            <trim suffix="" suffixOverrides=",">
+                <if test="activityCode != null">
+                t.activity_code = #{activityCode,jdbcType=VARCHAR},
+                </if>
+                <if test="labelName != null">
+                t.label_name = #{labelName,jdbcType=VARCHAR},
+                </if>
+                <if test="filedType != null">
+                t.filed_type = #{filedType,jdbcType=TINYINT},
+                </if>
+                <if test="dictionaryGroupCode != null">
+                t.dictionary_group_code = #{dictionaryGroupCode,jdbcType=VARCHAR},
+                </if>
+                <if test="index != null">
+                t.index = #{index,jdbcType=INTEGER},
+                </if>
+                <if test="isSecrecy != null">
+                t.is_secrecy = #{isSecrecy,jdbcType=BOOLEAN},
+                </if>
+                <if test="isKey != null">
+                t.is_key = #{isKey,jdbcType=BOOLEAN},
+                </if>
+                <if test="isRequired != null">
+                t.is_required = #{isRequired,jdbcType=BOOLEAN},
+                </if>
+                <if test="min != null">
+                t.min = #{min,jdbcType=INTEGER},
+                </if>
+                <if test="max != null">
+                t.max = #{max,jdbcType=INTEGER},
+                </if>
+                <if test="pattern != null">
+                t.pattern = #{pattern,jdbcType=VARCHAR},
+                </if>
+                <if test="createAt != null">
+                t.create_at = #{createAt,jdbcType=BIGINT},
+                </if>
+                <if test="createBy != null">
+                t.create_by = #{createBy,jdbcType=VARCHAR},
+                </if>
+                <if test="createName != null">
+                t.create_name = #{createName,jdbcType=VARCHAR},
+                </if>
+                <if test="updateAt != null">
+                t.update_at = #{updateAt,jdbcType=BIGINT},
+                </if>
+                <if test="updateBy != null">
+                t.update_by = #{updateBy,jdbcType=VARCHAR},
+                </if>
+                <if test="updateName != null">
+                t.update_name = #{updateName,jdbcType=VARCHAR},
+                </if>
+                <if test="isDel != null">
+                t.is_del = #{isDel,jdbcType=BOOLEAN},
+                </if>
+            </trim>
+        where t.id = #{id}
+    </update>
+
+    <update id="deleteById" parameterType="java.lang.Long">
+        update activity_enroll_field t set
+            t.is_del = 1
+        where t.id = #{id}
+    </update>
+
+</mapper>
