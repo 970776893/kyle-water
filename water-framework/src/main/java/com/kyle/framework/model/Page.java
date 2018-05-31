@@ -9,7 +9,7 @@ import java.util.List;
  * Created by zhangkai on 16-2-23.
  */
 @Data
-public class ModelPage<T> implements Serializable{
+public class Page<T> implements Serializable{
     private Integer pageNo;
     private Integer pageSize;
     private Integer total;

@@ -21,6 +21,39 @@
         <result column="is_del" property="isDel" jdbcType="BOOLEAN"/>
     </resultMap>
 
+    <resultMap id="ActivityDetailMap" type="com.kyle.water.activity.entity.ActivityDetail">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="BIGINT"/>
+        <result column="end_time" property="endTime" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="send_result_msg" property="sendResultMsg" jdbcType="TINYINT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="create_at" property="createAt" jdbcType="BIGINT"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="update_at" property="updateAt" jdbcType="BIGINT"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+        <result column="is_del" property="isDel" jdbcType="BOOLEAN"/>
+        <collection property="fields" javaType="java.util.List" ofType="com.kyle.water.activityEnrollField.entity.ActivityEnrollFieldEntity">
+            <result column="f_id" property="id" jdbcType="BIGINT"/>
+            <result column="f_activity_code" property="activityCode" jdbcType="VARCHAR"/>
+            <result column="f_label_name" property="labelName" jdbcType="VARCHAR"/>
+            <result column="f_filed_type" property="filedType" jdbcType="TINYINT"/>
+            <result column="f_dictionary_group_code" property="dictionaryGroupCode" jdbcType="VARCHAR"/>
+            <result column="f_index" property="index" jdbcType="INTEGER"/>
+            <result column="f_is_secrecy" property="isSecrecy" jdbcType="BOOLEAN"/>
+            <result column="f_is_key" property="isKey" jdbcType="BOOLEAN"/>
+            <result column="f_is_required" property="isRequired" jdbcType="BOOLEAN"/>
+            <result column="f_min" property="min" jdbcType="INTEGER"/>
+            <result column="f_max" property="max" jdbcType="INTEGER"/>
+            <result column="f_pattern" property="pattern" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
     <sql id="orderById">
         order by id desc
     </sql>
@@ -320,5 +353,47 @@
             t.is_del = 1
         where t.id = #{id}
     </update>
+
+
+    <select id="getDetailByCode" parameterType="java.lang.String" resultMap="ActivityDetailMap">
+      select
+        <trim suffix="" suffixOverrides=",">
+            a.id,
+            a.code,
+            a.name,
+            a.title,
+            a.start_time,
+            a.end_time,
+            a.status,
+            a.send_result_msg,
+            a.type,
+            a.create_at,
+            a.create_by,
+            a.create_name,
+            a.update_at,
+            a.update_by,
+            a.update_name,
+            a.is_del,
+
+            anf.id as f_id,
+            anf.activity_code as f_activity_code,
+            anf.label_name as f_label_name,
+            anf.filed_type as f_filed_type,
+            anf.dictionary_group_code as f_dictionary_group_code,
+            anf.index as f_index,
+            anf.is_secrecy as f_is_secrecy,
+            anf.is_key as f_is_key,
+            anf.is_required as f_is_required,
+            anf.`min` as `f_min`,
+            anf.`max` as `f_max`,
+            anf.pattern as f_pattern,
+            anf.error_tip as `f_error_tip`,
+
+        </trim>
+
+        from activity a left join activity_enroll_field anf on a.code = anf.activity_code
+        where a.is_del = 0 and anf.is_del = 0 and a.code = #{code}
+        order by f_index asc
+    </select>
 
 </mapper>

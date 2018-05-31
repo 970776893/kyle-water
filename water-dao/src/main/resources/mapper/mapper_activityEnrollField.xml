@@ -15,6 +15,7 @@
         <result column="min" property="min" jdbcType="INTEGER"/>
         <result column="max" property="max" jdbcType="INTEGER"/>
         <result column="pattern" property="pattern" jdbcType="VARCHAR"/>
+        <result column="error_tip" property="errorTip" jdbcType="VARCHAR"/>
         <result column="create_at" property="createAt" jdbcType="BIGINT"/>
         <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
         <result column="create_name" property="createName" jdbcType="VARCHAR"/>
@@ -30,73 +31,79 @@
 
     <sql id="pageParams">
         <if test="id != null">
-            and t.id = #{id,jdbcType=BIGINT}
+            and t.`id` = #{id,jdbcType=BIGINT}
         </if>
         <if test="activityCode != null">
-            and t.activity_code = #{activityCode,jdbcType=VARCHAR}
+            and t.`activity_code` = #{activityCode,jdbcType=VARCHAR}
         </if>
          <if test="activityCodeLike != null">
-                 and t.activity_code like concat( '%', #{activityCodeLike,jdbcType=VARCHAR}, '%')
+                 and t.`activity_code` like concat( '%', #{activityCodeLike,jdbcType=VARCHAR}, '%')
          </if>
         <if test="labelName != null">
-            and t.label_name = #{labelName,jdbcType=VARCHAR}
+            and t.`label_name` = #{labelName,jdbcType=VARCHAR}
         </if>
          <if test="labelNameLike != null">
-                 and t.label_name like concat( '%', #{labelNameLike,jdbcType=VARCHAR}, '%')
+                 and t.`label_name` like concat( '%', #{labelNameLike,jdbcType=VARCHAR}, '%')
          </if>
         <if test="filedType != null">
-            and t.filed_type = #{filedType,jdbcType=TINYINT}
+            and t.`filed_type` = #{filedType,jdbcType=TINYINT}
         </if>
         <if test="dictionaryGroupCode != null">
-            and t.dictionary_group_code = #{dictionaryGroupCode,jdbcType=VARCHAR}
+            and t.`dictionary_group_code` = #{dictionaryGroupCode,jdbcType=VARCHAR}
         </if>
          <if test="dictionaryGroupCodeLike != null">
-                 and t.dictionary_group_code like concat( '%', #{dictionaryGroupCodeLike,jdbcType=VARCHAR}, '%')
+                 and t.`dictionary_group_code` like concat( '%', #{dictionaryGroupCodeLike,jdbcType=VARCHAR}, '%')
          </if>
         <if test="index != null">
-            and t.index = #{index,jdbcType=INTEGER}
+            and t.`index` = #{index,jdbcType=INTEGER}
         </if>
         <if test="isSecrecy != null">
-            and t.is_secrecy = #{isSecrecy,jdbcType=BOOLEAN}
+            and t.`is_secrecy` = #{isSecrecy,jdbcType=BOOLEAN}
         </if>
         <if test="isKey != null">
-            and t.is_key = #{isKey,jdbcType=BOOLEAN}
+            and t.`is_key` = #{isKey,jdbcType=BOOLEAN}
         </if>
         <if test="isRequired != null">
-            and t.is_required = #{isRequired,jdbcType=BOOLEAN}
+            and t.`is_required` = #{isRequired,jdbcType=BOOLEAN}
         </if>
         <if test="min != null">
-            and t.min = #{min,jdbcType=INTEGER}
+            and t.`min` = #{min,jdbcType=INTEGER}
         </if>
         <if test="max != null">
-            and t.max = #{max,jdbcType=INTEGER}
+            and t.`max` = #{max,jdbcType=INTEGER}
         </if>
         <if test="pattern != null">
-            and t.pattern = #{pattern,jdbcType=VARCHAR}
+            and t.`pattern` = #{pattern,jdbcType=VARCHAR}
         </if>
          <if test="patternLike != null">
-                 and t.pattern like concat( '%', #{patternLike,jdbcType=VARCHAR}, '%')
+                 and t.`pattern` like concat( '%', #{patternLike,jdbcType=VARCHAR}, '%')
+         </if>
+        <if test="errorTip != null">
+            and t.`error_tip` = #{errorTip,jdbcType=VARCHAR}
+        </if>
+         <if test="errorTipLike != null">
+                 and t.`error_tip` like concat( '%', #{errorTipLike,jdbcType=VARCHAR}, '%')
          </if>
         <if test="createAt != null">
-            and t.create_at = #{createAt,jdbcType=BIGINT}
+            and t.`create_at` = #{createAt,jdbcType=BIGINT}
         </if>
         <if test="createBy != null">
-            and t.create_by = #{createBy,jdbcType=VARCHAR}
+            and t.`create_by` = #{createBy,jdbcType=VARCHAR}
         </if>
         <if test="createName != null">
-            and t.create_name = #{createName,jdbcType=VARCHAR}
+            and t.`create_name` = #{createName,jdbcType=VARCHAR}
         </if>
         <if test="updateAt != null">
-            and t.update_at = #{updateAt,jdbcType=BIGINT}
+            and t.`update_at` = #{updateAt,jdbcType=BIGINT}
         </if>
         <if test="updateBy != null">
-            and t.update_by = #{updateBy,jdbcType=VARCHAR}
+            and t.`update_by` = #{updateBy,jdbcType=VARCHAR}
         </if>
         <if test="updateName != null">
-            and t.update_name = #{updateName,jdbcType=VARCHAR}
+            and t.`update_name` = #{updateName,jdbcType=VARCHAR}
         </if>
         <if test="isDel != null">
-            and t.is_del = #{isDel,jdbcType=BOOLEAN}
+            and t.`is_del` = #{isDel,jdbcType=BOOLEAN}
         </if>
         <if test="isDel == null">
             and t.is_del = 0
@@ -106,25 +113,26 @@
     <insert id="insert" parameterType="com.kyle.water.activityEnrollField.entity.ActivityEnrollFieldEntity" useGeneratedKeys="true" keyProperty="id">
         insert into activity_enroll_field (
             <trim suffix="" suffixOverrides=",">
-                    id,
-                    activity_code,
-                    label_name,
-                    filed_type,
-                    dictionary_group_code,
-                    index,
-                    is_secrecy,
-                    is_key,
-                    is_required,
-                    min,
-                    max,
-                    pattern,
-                    create_at,
-                    create_by,
-                    create_name,
-                    update_at,
-                    update_by,
-                    update_name,
-                    is_del,
+                    `id`,
+                    `activity_code`,
+                    `label_name`,
+                    `filed_type`,
+                    `dictionary_group_code`,
+                    `index`,
+                    `is_secrecy`,
+                    `is_key`,
+                    `is_required`,
+                    `min`,
+                    `max`,
+                    `pattern`,
+                    `error_tip`,
+                    `create_at`,
+                    `create_by`,
+                    `create_name`,
+                    `update_at`,
+                    `update_by`,
+                    `update_name`,
+                    `is_del`,
             </trim>
         )
         values (
@@ -141,6 +149,7 @@
                 #{min, jdbcType=INTEGER},
                 #{max, jdbcType=INTEGER},
                 #{pattern, jdbcType=VARCHAR},
+                #{errorTip, jdbcType=VARCHAR},
                 #{createAt, jdbcType=BIGINT},
                 #{createBy, jdbcType=VARCHAR},
                 #{createName, jdbcType=VARCHAR},
@@ -156,61 +165,64 @@
         insert into activity_enroll_field (
             <trim suffix="" suffixOverrides=",">
                 <if test="id != null">
-                    id,
+                    `id`,
                 </if>
                 <if test="activityCode != null">
-                    activity_code,
+                    `activity_code`,
                 </if>
                 <if test="labelName != null">
-                    label_name,
+                    `label_name`,
                 </if>
                 <if test="filedType != null">
-                    filed_type,
+                    `filed_type`,
                 </if>
                 <if test="dictionaryGroupCode != null">
-                    dictionary_group_code,
+                    `dictionary_group_code`,
                 </if>
                 <if test="index != null">
-                    index,
+                    `index`,
                 </if>
                 <if test="isSecrecy != null">
-                    is_secrecy,
+                    `is_secrecy`,
                 </if>
                 <if test="isKey != null">
-                    is_key,
+                    `is_key`,
                 </if>
                 <if test="isRequired != null">
-                    is_required,
+                    `is_required`,
                 </if>
                 <if test="min != null">
-                    min,
+                    `min`,
                 </if>
                 <if test="max != null">
-                    max,
+                    `max`,
                 </if>
                 <if test="pattern != null">
-                    pattern,
+                    `pattern`,
+                </if>
+                <if test="errorTip != null">
+                    `error_tip`,
                 </if>
                 <if test="createAt != null">
-                    create_at,
+                    `create_at`,
                 </if>
                 <if test="createBy != null">
-                    create_by,
+                    `create_by`,
                 </if>
                 <if test="createName != null">
-                    create_name,
+                    `create_name`,
                 </if>
                 <if test="updateAt != null">
-                    update_at,
+                    `update_at`,
                 </if>
                 <if test="updateBy != null">
-                    update_by,
+                    `update_by`,
                 </if>
                 <if test="updateName != null">
-                    update_name,
+                    `update_name`,
                 </if>
                 <if test="isDel != null">
-                    is_del,
+                    `is_del`,
                 </if>
             </trim>
         )
@@ -251,6 +263,9 @@
             </if>
             <if test="pattern != null">
                 #{pattern, jdbcType=VARCHAR},
+            </if>
+            <if test="errorTip != null">
+                #{errorTip, jdbcType=VARCHAR},
             </if>
             <if test="createAt != null">
                 #{createAt, jdbcType=BIGINT},
@@ -306,58 +321,61 @@
         update activity_enroll_field t set
             <trim suffix="" suffixOverrides=",">
                 <if test="activityCode != null">
-                t.activity_code = #{activityCode,jdbcType=VARCHAR},
+                t.`activity_code` = #{activityCode,jdbcType=VARCHAR},
                 </if>
                 <if test="labelName != null">
-                t.label_name = #{labelName,jdbcType=VARCHAR},
+                t.`label_name` = #{labelName,jdbcType=VARCHAR},
                 </if>
                 <if test="filedType != null">
-                t.filed_type = #{filedType,jdbcType=TINYINT},
+                t.`filed_type` = #{filedType,jdbcType=TINYINT},
                 </if>
                 <if test="dictionaryGroupCode != null">
-                t.dictionary_group_code = #{dictionaryGroupCode,jdbcType=VARCHAR},
+                t.`dictionary_group_code` = #{dictionaryGroupCode,jdbcType=VARCHAR},
                 </if>
                 <if test="index != null">
-                t.index = #{index,jdbcType=INTEGER},
+                t.`index` = #{index,jdbcType=INTEGER},
                 </if>
                 <if test="isSecrecy != null">
-                t.is_secrecy = #{isSecrecy,jdbcType=BOOLEAN},
+                t.`is_secrecy` = #{isSecrecy,jdbcType=BOOLEAN},
                 </if>
                 <if test="isKey != null">
-                t.is_key = #{isKey,jdbcType=BOOLEAN},
+                t.`is_key` = #{isKey,jdbcType=BOOLEAN},
                 </if>
                 <if test="isRequired != null">
-                t.is_required = #{isRequired,jdbcType=BOOLEAN},
+                t.`is_required` = #{isRequired,jdbcType=BOOLEAN},
                 </if>
                 <if test="min != null">
-                t.min = #{min,jdbcType=INTEGER},
+                t.`min` = #{min,jdbcType=INTEGER},
                 </if>
                 <if test="max != null">
-                t.max = #{max,jdbcType=INTEGER},
+                t.`max` = #{max,jdbcType=INTEGER},
                 </if>
                 <if test="pattern != null">
-                t.pattern = #{pattern,jdbcType=VARCHAR},
+                t.`pattern` = #{pattern,jdbcType=VARCHAR},
+                </if>
+                <if test="errorTip != null">
+                t.`error_tip` = #{errorTip,jdbcType=VARCHAR},
                 </if>
                 <if test="createAt != null">
-                t.create_at = #{createAt,jdbcType=BIGINT},
+                t.`create_at` = #{createAt,jdbcType=BIGINT},
                 </if>
                 <if test="createBy != null">
-                t.create_by = #{createBy,jdbcType=VARCHAR},
+                t.`create_by` = #{createBy,jdbcType=VARCHAR},
                 </if>
                 <if test="createName != null">
-                t.create_name = #{createName,jdbcType=VARCHAR},
+                t.`create_name` = #{createName,jdbcType=VARCHAR},
                 </if>
                 <if test="updateAt != null">
-                t.update_at = #{updateAt,jdbcType=BIGINT},
+                t.`update_at` = #{updateAt,jdbcType=BIGINT},
                 </if>
                 <if test="updateBy != null">
-                t.update_by = #{updateBy,jdbcType=VARCHAR},
+                t.`update_by` = #{updateBy,jdbcType=VARCHAR},
                 </if>
                 <if test="updateName != null">
-                t.update_name = #{updateName,jdbcType=VARCHAR},
+                t.`update_name` = #{updateName,jdbcType=VARCHAR},
                 </if>
                 <if test="isDel != null">
-                t.is_del = #{isDel,jdbcType=BOOLEAN},
+                t.`is_del` = #{isDel,jdbcType=BOOLEAN},
                 </if>
             </trim>
         where t.id = #{id}

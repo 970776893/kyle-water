@@ -15,11 +15,11 @@
     <sql id="pageParams">
         <#list fieldList as field>
         <if test="${field.fieldJava} != null">
-            and t.${field.fieldDb} = ${r"#"}{${field.fieldJava},jdbcType=${field.typeJdbc}}
+            and t.`${field.fieldDb}` = ${r"#"}{${field.fieldJava},jdbcType=${field.typeJdbc}}
         </if>
          <#if (field.typeJdbc == "VARCHAR" && field.fieldJava != "createBy" && field.fieldJava != "createName" && field.fieldJava != "updateBy" && field.fieldJava != "updateName") >
          <if test="${field.fieldJava}Like != null">
-                 and t.${field.fieldDb} like concat( '%', ${r"#"}{${field.fieldJava}Like,jdbcType=${field.typeJdbc}}, '%')
+                 and t.`${field.fieldDb}` like concat( '%', ${r"#"}{${field.fieldJava}Like,jdbcType=${field.typeJdbc}}, '%')
          </if>
          </#if>
         </#list>
@@ -32,7 +32,7 @@
         insert into ${tableName} (
             ${r'<trim suffix="" suffixOverrides=",">'}
                 <#list fieldList as field>
-                    ${field.fieldDb},
+                    `${field.fieldDb}`,
                 </#list>
             ${r'</trim>'}
         )
@@ -50,7 +50,7 @@
             ${r'<trim suffix="" suffixOverrides=",">'}
                 <#list fieldList as field>
                 <if test="${field.fieldJava} != null">
-                    ${field.fieldDb},
+                    `${field.fieldDb}`,
                 </if>
                 </#list>
             ${r'</trim>'}
@@ -97,7 +97,7 @@
                 <#list fieldList as field>
                 <#if (field.fieldJava != "id") >
                 <if test="${field.fieldJava} != null">
-                t.${field.fieldDb} = ${r"#"}{${field.fieldJava},jdbcType=${field.typeJdbc}},
+                t.`${field.fieldDb}` = ${r"#"}{${field.fieldJava},jdbcType=${field.typeJdbc}},
                 </if>
                 </#if>
                 </#list>
