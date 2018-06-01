@@ -25,6 +25,8 @@ public class FileUploadServiceImpl implements IFileUploadService {
     @Value("${upload.img.address.visit}")
     private String imgVisitAddress;
 
+    private static int FILE_NAME_RANDOM_LENGTH = 8;
+
     Log logger =  LogFactory.getLog(FileUploadServiceImpl.class);
 
     @Override
@@ -33,7 +35,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         ModelResult<String> result = new ModelResult<>("上传成功");
 
         String fileName = DateUtils.format(System.currentTimeMillis(), "yyyy-MM-dd_HH-mm-ss_");
-        fileName += RandomUtils.random(4);
+        fileName += RandomUtils.random(FILE_NAME_RANDOM_LENGTH);
         //后缀名
         fileName += file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         FileOutputStream outputStream = null ;
