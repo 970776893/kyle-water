@@ -10,6 +10,7 @@ import com.kyle.framework.service.IBaseService;
 import com.kyle.framework.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -31,18 +32,20 @@ public abstract class BaseServiceImpl<T extends IBaseDao<E>, E extends BaseEntit
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
-        ModelResult<String> result = new ModelResult<>("删除成功");
         dao.deleteById(id);
     }
 
     @Override
+    @Transactional
     public long create(E item) {
         dao.insertSelective(item);
         return item.getId();
     }
 
     @Override
+    @Transactional
     public void modifyById(E item) {
         dao.updateSelectiveById(item);
     }
