@@ -49,6 +49,30 @@
         )
     </insert>
 
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into ${tableName} (
+    ${r'<trim suffix="" suffixOverrides=",">'}
+    <#list fieldList as field>
+        <#if (field.fieldDb != "id")>
+            `${field.fieldDb}`,
+        </#if>
+    </#list>
+    ${r'</trim>'}
+        )
+        values
+        ${r'<foreach collection="list" item="item" index="index" separator=",">'}
+            (
+        ${r'<trim suffix="" suffixOverrides=",">'}
+        <#list fieldList as field>
+            <#if (field.fieldDb != "id")>
+            ${r"#"}{${field.fieldJava}, jdbcType=${field.typeJdbc}},
+            </#if>
+        </#list>
+        ${r'</trim>'}
+            )
+        ${r'</foreach>'}
+    </insert>
+
     <insert id="insertSelective" parameterType="${basePackage}.${resourceName}.entity.${modelName}Entity" useGeneratedKeys="true" keyProperty="id">
         insert into ${tableName} (
             ${r'<trim suffix="" suffixOverrides=",">'}
