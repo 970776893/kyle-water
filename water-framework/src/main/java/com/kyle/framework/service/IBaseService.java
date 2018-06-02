@@ -18,7 +18,9 @@ public interface IBaseService<T extends IBaseDao<E>, E extends BaseEntity> {
 
     void delete(Long id);
 
-    long create(E item);
+    long insert(E item);
+
+    void batchInsert(List<E> list);
 
     void modifyById(E item);
 

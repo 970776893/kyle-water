@@ -1,6 +1,7 @@
 package com.kyle.framework.service.impl;
 
 
+import com.kyle.framework.annotation.SystemLog;
 import com.kyle.framework.dao.IBaseDao;
 import com.kyle.framework.entity.BaseEntity;
 import com.kyle.framework.exception.KyleExceptioin;
@@ -39,9 +40,22 @@ public abstract class BaseServiceImpl<T extends IBaseDao<E>, E extends BaseEntit
 
     @Override
     @Transactional
-    public long create(E item) {
+    public long insert(E item) {
+        handlerCreateUser(item);
+        item.setIsDel(false);
         dao.insertSelective(item);
         return item.getId();
+    }
+
+    @Override
+    @Transactional
+    public void batchInsert(List<E> list) {
+        for(E item: list) {
+            handlerCreateUser(item);
+            item.setIsDel(false);
+        }
+        dao.batchInsert(list);
+
     }
 
     @Override
@@ -97,6 +111,13 @@ public abstract class BaseServiceImpl<T extends IBaseDao<E>, E extends BaseEntit
         if(count > singleQueryMaxLength) {
             throw new KyleExceptioin("查询数量太多");
         }
+    }
+
+    //TODO 登录模块还未做好，暂时是使用system
+    protected void handlerCreateUser(BaseEntity item) {
+        item.setCreateAt(System.currentTimeMillis());
+        item.setCreateBy("system");
+        item.setCreateName("system");
     }
 
 }

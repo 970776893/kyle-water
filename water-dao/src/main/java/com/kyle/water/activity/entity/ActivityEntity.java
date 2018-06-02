@@ -2,6 +2,8 @@ package com.kyle.water.activity.entity;
 
 import com.kyle.framework.entity.BaseEntity;
 import lombok.Data;
+import sun.jvm.hotspot.types.basic.BasicOopField;
+
 /**
  *
  *  Created by kyle.
@@ -44,7 +46,7 @@ public class ActivityEntity  extends BaseEntity {
     *
     * 是否发送结果的短信通知（0-发送短息 1-不发送短信）
     */
-    private Integer sendResultMsg;
+    private Boolean sendResultMsg = false;
     /**
     *
     * 类型（0-报名活动，1-投票活动，2-问卷答题，3-抽奖活动，4-抢购活动）

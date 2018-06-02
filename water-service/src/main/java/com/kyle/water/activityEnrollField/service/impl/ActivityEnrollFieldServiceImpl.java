@@ -7,6 +7,8 @@ import com.kyle.water.activityEnrollField.service.IActivityEnrollFieldService;
 import com.kyle.framework.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  *
  *  Created by kyle.
@@ -14,5 +16,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ActivityEnrollFieldServiceImpl extends BaseServiceImpl<IActivityEnrollFieldDao, ActivityEnrollFieldEntity> implements IActivityEnrollFieldService {
-
 }

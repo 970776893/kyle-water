@@ -15,6 +15,8 @@ public interface IBaseDao<E extends BaseEntity> {
 
     void insertSelective(E item);
 
+    void batchInsert(List<E> list);
+
     void updateSelectiveById(E item);
 
     Integer countByParams(Map<String, Object> param);

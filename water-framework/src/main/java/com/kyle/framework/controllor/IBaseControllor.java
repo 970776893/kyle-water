@@ -98,12 +98,12 @@ public abstract class IBaseControllor<E extends BaseEntity, F extends IBaseDao<E
     }
 
     @ResponseBody
-    @RequestMapping(value = "create", method = RequestMethod.POST)
+    @RequestMapping(value = "insert", method = RequestMethod.POST)
     @SystemLog(description = "新增内容")
-    public ModelResult<Long> create(@RequestBody E item) {
+    public ModelResult<Long> insert(@RequestBody E item) {
         ModelResult<Long> result = new ModelResult<>("新增成功");
         try {
-            long id = service.create(item);
+            long id = service.insert(item);
             result.setData(id);
         } catch (KyleExceptioin k) {
             result.failure(k.getMessage());

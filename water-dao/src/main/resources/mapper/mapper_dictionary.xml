@@ -71,7 +71,6 @@
     <insert id="insert" parameterType="com.kyle.water.dictionary.entity.DictionaryEntity" useGeneratedKeys="true" keyProperty="id">
         insert into dictionary (
             <trim suffix="" suffixOverrides=",">
-                    id,
                     group_code,
                     code,
                     value,
@@ -86,7 +85,6 @@
         )
         values (
             <trim suffix="" suffixOverrides=",">
-                #{id, jdbcType=BIGINT},
                 #{groupCode, jdbcType=VARCHAR},
                 #{code, jdbcType=VARCHAR},
                 #{value, jdbcType=VARCHAR},
@@ -101,12 +99,43 @@
         )
     </insert>
 
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into dictionary (
+        <trim suffix="" suffixOverrides=",">
+            group_code,
+            code,
+            value,
+            create_at,
+            create_by,
+            create_name,
+            update_at,
+            update_by,
+            update_name,
+            is_del,
+        </trim>
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+          (
+            <trim suffix="" suffixOverrides=",">
+                #{groupCode, jdbcType=VARCHAR},
+                #{code, jdbcType=VARCHAR},
+                #{value, jdbcType=VARCHAR},
+                #{createAt, jdbcType=BIGINT},
+                #{createBy, jdbcType=VARCHAR},
+                #{createName, jdbcType=VARCHAR},
+                #{updateAt, jdbcType=BIGINT},
+                #{updateBy, jdbcType=VARCHAR},
+                #{updateName, jdbcType=VARCHAR},
+                #{isDel, jdbcType=BOOLEAN},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
     <insert id="insertSelective" parameterType="com.kyle.water.dictionary.entity.DictionaryEntity" useGeneratedKeys="true" keyProperty="id">
         insert into dictionary (
             <trim suffix="" suffixOverrides=",">
-                <if test="id != null">
-                    id,
-                </if>
                 <if test="groupCode != null">
                     group_code,
                 </if>
@@ -141,9 +170,6 @@
         )
         values (
         <trim suffix="" suffixOverrides=",">
-            <if test="id != null">
-                #{id, jdbcType=BIGINT},
-            </if>
             <if test="groupCode != null">
                 #{groupCode, jdbcType=VARCHAR},
             </if>

@@ -20,34 +20,34 @@
 
     <sql id="pageParams">
         <if test="id != null">
-            and t.id = #{id,jdbcType=BIGINT}
+            and t.`id` = #{id,jdbcType=BIGINT}
         </if>
         <if test="name != null">
-            and t.name = #{name,jdbcType=VARCHAR}
+            and t.`name` = #{name,jdbcType=VARCHAR}
         </if>
          <if test="nameLike != null">
-                 and t.name like concat( '%', #{nameLike,jdbcType=VARCHAR}, '%')
+                 and t.`name` like concat( '%', #{nameLike,jdbcType=VARCHAR}, '%')
          </if>
         <if test="createAt != null">
-            and t.create_at = #{createAt,jdbcType=BIGINT}
+            and t.`create_at` = #{createAt,jdbcType=BIGINT}
         </if>
         <if test="createBy != null">
-            and t.create_by = #{createBy,jdbcType=VARCHAR}
+            and t.`create_by` = #{createBy,jdbcType=VARCHAR}
         </if>
         <if test="createName != null">
-            and t.create_name = #{createName,jdbcType=VARCHAR}
+            and t.`create_name` = #{createName,jdbcType=VARCHAR}
         </if>
         <if test="updateAt != null">
-            and t.update_at = #{updateAt,jdbcType=BIGINT}
+            and t.`update_at` = #{updateAt,jdbcType=BIGINT}
         </if>
         <if test="updateBy != null">
-            and t.update_by = #{updateBy,jdbcType=VARCHAR}
+            and t.`update_by` = #{updateBy,jdbcType=VARCHAR}
         </if>
         <if test="updateName != null">
-            and t.update_name = #{updateName,jdbcType=VARCHAR}
+            and t.`update_name` = #{updateName,jdbcType=VARCHAR}
         </if>
         <if test="isDel != null">
-            and t.is_del = #{isDel,jdbcType=BOOLEAN}
+            and t.`is_del` = #{isDel,jdbcType=BOOLEAN}
         </if>
         <if test="isDel == null">
             and t.is_del = 0
@@ -57,28 +57,26 @@
     <insert id="insert" parameterType="com.kyle.water.test.entity.TestEntity" useGeneratedKeys="true" keyProperty="id">
         insert into test (
             <trim suffix="" suffixOverrides=",">
-                    id,
-                    name,
-                    create_at,
-                    create_by,
-                    create_name,
-                    update_at,
-                    update_by,
-                    update_name,
-                    is_del,
+                    `name`,
+                    `create_at`,
+                    `create_by`,
+                    `create_name`,
+                    `update_at`,
+                    `update_by`,
+                    `update_name`,
+                    `is_del`,
             </trim>
         )
         values (
             <trim suffix="" suffixOverrides=",">
-                #{id, jdbcType=BIGINT},
-                #{name, jdbcType=VARCHAR},
-                #{createAt, jdbcType=BIGINT},
-                #{createBy, jdbcType=VARCHAR},
-                #{createName, jdbcType=VARCHAR},
-                #{updateAt, jdbcType=BIGINT},
-                #{updateBy, jdbcType=VARCHAR},
-                #{updateName, jdbcType=VARCHAR},
-                #{isDel, jdbcType=BOOLEAN},
+                    #{name, jdbcType=VARCHAR},
+                    #{createAt, jdbcType=BIGINT},
+                    #{createBy, jdbcType=VARCHAR},
+                    #{createName, jdbcType=VARCHAR},
+                    #{updateAt, jdbcType=BIGINT},
+                    #{updateBy, jdbcType=VARCHAR},
+                    #{updateName, jdbcType=VARCHAR},
+                    #{isDel, jdbcType=BOOLEAN},
             </trim>
         )
     </insert>
@@ -86,40 +84,34 @@
     <insert id="insertSelective" parameterType="com.kyle.water.test.entity.TestEntity" useGeneratedKeys="true" keyProperty="id">
         insert into test (
             <trim suffix="" suffixOverrides=",">
-                <if test="id != null">
-                    id,
-                </if>
                 <if test="name != null">
-                    name,
+                    `name`,
                 </if>
                 <if test="createAt != null">
-                    create_at,
+                    `create_at`,
                 </if>
                 <if test="createBy != null">
-                    create_by,
+                    `create_by`,
                 </if>
                 <if test="createName != null">
-                    create_name,
+                    `create_name`,
                 </if>
                 <if test="updateAt != null">
-                    update_at,
+                    `update_at`,
                 </if>
                 <if test="updateBy != null">
-                    update_by,
+                    `update_by`,
                 </if>
                 <if test="updateName != null">
-                    update_name,
+                    `update_name`,
                 </if>
                 <if test="isDel != null">
-                    is_del,
+                    `is_del`,
                 </if>
             </trim>
         )
         values (
         <trim suffix="" suffixOverrides=",">
-            <if test="id != null">
-                #{id, jdbcType=BIGINT},
-            </if>
             <if test="name != null">
                 #{name, jdbcType=VARCHAR},
             </if>
@@ -177,28 +169,28 @@
         update test t set
             <trim suffix="" suffixOverrides=",">
                 <if test="name != null">
-                t.name = #{name,jdbcType=VARCHAR},
+                t.`name` = #{name,jdbcType=VARCHAR},
                 </if>
                 <if test="createAt != null">
-                t.create_at = #{createAt,jdbcType=BIGINT},
+                t.`create_at` = #{createAt,jdbcType=BIGINT},
                 </if>
                 <if test="createBy != null">
-                t.create_by = #{createBy,jdbcType=VARCHAR},
+                t.`create_by` = #{createBy,jdbcType=VARCHAR},
                 </if>
                 <if test="createName != null">
-                t.create_name = #{createName,jdbcType=VARCHAR},
+                t.`create_name` = #{createName,jdbcType=VARCHAR},
                 </if>
                 <if test="updateAt != null">
-                t.update_at = #{updateAt,jdbcType=BIGINT},
+                t.`update_at` = #{updateAt,jdbcType=BIGINT},
                 </if>
                 <if test="updateBy != null">
-                t.update_by = #{updateBy,jdbcType=VARCHAR},
+                t.`update_by` = #{updateBy,jdbcType=VARCHAR},
                 </if>
                 <if test="updateName != null">
-                t.update_name = #{updateName,jdbcType=VARCHAR},
+                t.`update_name` = #{updateName,jdbcType=VARCHAR},
                 </if>
                 <if test="isDel != null">
-                t.is_del = #{isDel,jdbcType=BOOLEAN},
+                t.`is_del` = #{isDel,jdbcType=BOOLEAN},
                 </if>
             </trim>
         where t.id = #{id}

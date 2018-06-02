@@ -51,6 +51,8 @@
             <result column="f_min" property="min" jdbcType="INTEGER"/>
             <result column="f_max" property="max" jdbcType="INTEGER"/>
             <result column="f_pattern" property="pattern" jdbcType="VARCHAR"/>
+            <result column="f_error_tip" property="errorTip" jdbcType="VARCHAR"/>
+
         </collection>
     </resultMap>
 
@@ -124,7 +126,6 @@
     <insert id="insert" parameterType="com.kyle.water.activity.entity.ActivityEntity" useGeneratedKeys="true" keyProperty="id">
         insert into activity (
             <trim suffix="" suffixOverrides=",">
-                    id,
                     code,
                     name,
                     title,
@@ -144,7 +145,6 @@
         )
         values (
             <trim suffix="" suffixOverrides=",">
-                #{id, jdbcType=BIGINT},
                 #{code, jdbcType=VARCHAR},
                 #{name, jdbcType=VARCHAR},
                 #{title, jdbcType=VARCHAR},
@@ -164,12 +164,53 @@
         )
     </insert>
 
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into activity (
+        <trim suffix="" suffixOverrides=",">
+            code,
+            name,
+            title,
+            start_time,
+            end_time,
+            status,
+            send_result_msg,
+            type,
+            create_at,
+            create_by,
+            create_name,
+            update_at,
+            update_by,
+            update_name,
+            is_del,
+        </trim>
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            <trim suffix="" suffixOverrides=",">
+                #{code, jdbcType=VARCHAR},
+                #{name, jdbcType=VARCHAR},
+                #{title, jdbcType=VARCHAR},
+                #{startTime, jdbcType=BIGINT},
+                #{endTime, jdbcType=BIGINT},
+                #{status, jdbcType=TINYINT},
+                #{sendResultMsg, jdbcType=TINYINT},
+                #{type, jdbcType=TINYINT},
+                #{createAt, jdbcType=BIGINT},
+                #{createBy, jdbcType=VARCHAR},
+                #{createName, jdbcType=VARCHAR},
+                #{updateAt, jdbcType=BIGINT},
+                #{updateBy, jdbcType=VARCHAR},
+                #{updateName, jdbcType=VARCHAR},
+                #{isDel, jdbcType=BOOLEAN},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
     <insert id="insertSelective" parameterType="com.kyle.water.activity.entity.ActivityEntity" useGeneratedKeys="true" keyProperty="id">
         insert into activity (
             <trim suffix="" suffixOverrides=",">
-                <if test="id != null">
-                    id,
-                </if>
                 <if test="code != null">
                     code,
                 </if>
@@ -219,9 +260,6 @@
         )
         values (
         <trim suffix="" suffixOverrides=",">
-            <if test="id != null">
-                #{id, jdbcType=BIGINT},
-            </if>
             <if test="code != null">
                 #{code, jdbcType=VARCHAR},
             </if>

@@ -60,7 +60,7 @@
     </servlet-mapping>
 
     <error-page>
-        <!--<error-code>500</error-code>-->
+        <error-code>500</error-code>
         <location>/errorPage.jsp</location>
     </error-page>
 

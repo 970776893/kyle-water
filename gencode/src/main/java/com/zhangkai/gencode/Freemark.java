@@ -89,6 +89,21 @@ public class Freemark {
             dirFile.mkdirs();
         }
         File outFile = new File(pathPath);
+        if(outFile.exists()) {
+            Scanner scan = new Scanner(System.in);
+            System.out.print("文件(" + outFile.getAbsolutePath() + ")已存在.\n请输入命令：1-覆盖，2-取消 :");
+           do{
+               String command = scan.nextLine();
+               if("1".equals(command)){
+                   System.out.println("忽略文件:" + outFile.getAbsolutePath());
+                   return;
+               }else if("2".equals(command)){
+                   break;
+               }else{
+                   System.out.print("无效命令：请输入命令：1-覆盖，2-取消 :");
+               }
+           }while(true);
+        }
         Template temp = config.getTemplate(templateName);
         Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile)));
         temp.process(datas, out);

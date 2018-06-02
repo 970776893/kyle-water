@@ -32,14 +32,18 @@
         insert into ${tableName} (
             ${r'<trim suffix="" suffixOverrides=",">'}
                 <#list fieldList as field>
+                <#if (field.fieldDb != "id")>
                     `${field.fieldDb}`,
+                </#if>
                 </#list>
             ${r'</trim>'}
         )
         values (
             ${r'<trim suffix="" suffixOverrides=",">'}
                 <#list fieldList as field>
-                ${r"#"}{${field.fieldJava}, jdbcType=${field.typeJdbc}},
+                <#if (field.fieldDb != "id")>
+                    ${r"#"}{${field.fieldJava}, jdbcType=${field.typeJdbc}},
+                </#if>
                 </#list>
             ${r'</trim>'}
         )
@@ -49,18 +53,22 @@
         insert into ${tableName} (
             ${r'<trim suffix="" suffixOverrides=",">'}
                 <#list fieldList as field>
+                <#if (field.fieldDb != "id")>
                 <if test="${field.fieldJava} != null">
                     `${field.fieldDb}`,
                 </if>
+                </#if>
                 </#list>
             ${r'</trim>'}
         )
         values (
         ${r'<trim suffix="" suffixOverrides=",">'}
             <#list fieldList as field>
+                <#if (field.fieldDb != "id")>
             <if test="${field.fieldJava} != null">
                 ${r"#"}{${field.fieldJava}, jdbcType=${field.typeJdbc}},
             </if>
+                </#if>
             </#list>
         ${r'</trim>'}
         )

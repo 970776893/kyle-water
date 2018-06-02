@@ -10,10 +10,7 @@ import com.kyle.water.activity.entity.ActivityEntity;
 import com.kyle.water.activity.service.IActivityService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by kyle.
@@ -50,6 +47,31 @@ public class ActivityController extends IBaseControllor<ActivityEntity, IActivit
         } catch (Throwable e) {
             log.error("获取活动异常", e);
             result.failure("获取异常");
+        }
+        return result;
+    }
+
+    /**
+     * 创建活动
+     *
+     * @param activityDetail 获取编码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "create", method = {RequestMethod.POST})
+    @SystemLog(description = "创建活动")
+    public ModelResult<String> create(@RequestBody ActivityDetail activityDetail) {
+        ModelResult<String> result = new ModelResult<>();
+        try {
+            String code = service.create(activityDetail);
+            result.setData(code);
+            result.success();
+        } catch (KyleExceptioin k) {
+            log.error("创建活动失败", k);
+            result.failure(k.getMessage());
+        } catch (Throwable e) {
+            log.error("创建活动活动异常", e);
+            result.failure("创建活动活动异常");
         }
         return result;
     }

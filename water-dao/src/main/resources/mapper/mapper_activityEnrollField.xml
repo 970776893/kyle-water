@@ -113,7 +113,6 @@
     <insert id="insert" parameterType="com.kyle.water.activityEnrollField.entity.ActivityEnrollFieldEntity" useGeneratedKeys="true" keyProperty="id">
         insert into activity_enroll_field (
             <trim suffix="" suffixOverrides=",">
-                    `id`,
                     `activity_code`,
                     `label_name`,
                     `filed_type`,
@@ -137,7 +136,6 @@
         )
         values (
             <trim suffix="" suffixOverrides=",">
-                #{id, jdbcType=BIGINT},
                 #{activityCode, jdbcType=VARCHAR},
                 #{labelName, jdbcType=VARCHAR},
                 #{filedType, jdbcType=TINYINT},
@@ -161,12 +159,62 @@
         )
     </insert>
 
+
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into activity_enroll_field (
+        <trim suffix="" suffixOverrides=",">
+            `activity_code`,
+            `label_name`,
+            `filed_type`,
+            `dictionary_group_code`,
+            `index`,
+            `is_secrecy`,
+            `is_key`,
+            `is_required`,
+            `min`,
+            `max`,
+            `pattern`,
+            `error_tip`,
+            `create_at`,
+            `create_by`,
+            `create_name`,
+            `update_at`,
+            `update_by`,
+            `update_name`,
+            `is_del`,
+        </trim>
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            <trim suffix="" suffixOverrides=",">
+                #{item.activityCode, jdbcType=VARCHAR},
+                #{item.labelName, jdbcType=VARCHAR},
+                #{item.filedType, jdbcType=TINYINT},
+                #{item.dictionaryGroupCode, jdbcType=VARCHAR},
+                #{item.index, jdbcType=INTEGER},
+                #{item.isSecrecy, jdbcType=BOOLEAN},
+                #{item.isKey, jdbcType=BOOLEAN},
+                #{item.isRequired, jdbcType=BOOLEAN},
+                #{item.min, jdbcType=INTEGER},
+                #{item.max, jdbcType=INTEGER},
+                #{item.pattern, jdbcType=VARCHAR},
+                #{item.errorTip, jdbcType=VARCHAR},
+                #{item.createAt, jdbcType=BIGINT},
+                #{item.createBy, jdbcType=VARCHAR},
+                #{item.createName, jdbcType=VARCHAR},
+                #{item.updateAt, jdbcType=BIGINT},
+                #{item.updateBy, jdbcType=VARCHAR},
+                #{item.updateName, jdbcType=VARCHAR},
+                #{item.isDel, jdbcType=BOOLEAN},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
     <insert id="insertSelective" parameterType="com.kyle.water.activityEnrollField.entity.ActivityEnrollFieldEntity" useGeneratedKeys="true" keyProperty="id">
         insert into activity_enroll_field (
             <trim suffix="" suffixOverrides=",">
-                <if test="id != null">
-                    `id`,
-                </if>
                 <if test="activityCode != null">
                     `activity_code`,
                 </if>
@@ -228,9 +276,6 @@
         )
         values (
         <trim suffix="" suffixOverrides=",">
-            <if test="id != null">
-                #{id, jdbcType=BIGINT},
-            </if>
             <if test="activityCode != null">
                 #{activityCode, jdbcType=VARCHAR},
             </if>

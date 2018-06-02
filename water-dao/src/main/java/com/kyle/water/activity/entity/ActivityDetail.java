@@ -11,5 +11,8 @@ import java.util.List;
  */
 @Data
 public class ActivityDetail extends ActivityEntity{
+    /**
+     * 活动配置信息
+     */
     private List<ActivityEnrollFieldEntity> fields;
 }

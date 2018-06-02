@@ -39,17 +39,17 @@ public class ActivityEnrollFieldEntity  extends BaseEntity {
     *
     * 是否保密(0-不保密，1-保密)
     */
-    private Boolean isSecrecy;
+    private Boolean isSecrecy = false;
     /**
     *
     * 是否作为唯一标识(0-不是，1-是)
     */
-    private Boolean isKey;
+    private Boolean isKey = false;
     /**
     *
     * 是否必输项(0-不是，1-是)
     */
-    private Boolean isRequired;
+    private Boolean isRequired = false;
     /**
     *
     * 最小值/长度
@@ -65,5 +65,10 @@ public class ActivityEnrollFieldEntity  extends BaseEntity {
     * 正则表达式限制
     */
     private String pattern;
+
+    /**
+     * 错误提示信息
+     */
+    private String errorTip;
 
 }
