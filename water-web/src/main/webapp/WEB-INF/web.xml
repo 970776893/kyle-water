@@ -27,6 +27,14 @@
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>characterEncodingFilter</filter-name>
@@ -63,6 +71,15 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
+    <!--登录过滤-->
+    <filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>com.kyle.framework.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <!--加载环境-->
     <servlet>
@@ -81,7 +98,7 @@
 
     <session-config>
         <!--分钟为单位-->
-        <session-timeout>30</session-timeout>
+        <session-timeout>1</session-timeout>
     </session-config>
 
     <error-page>

@@ -8,12 +8,17 @@
 
     <context:annotation-config/>
     <bean id="redisHttpSessionConfiguration"
-          class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/>
+          class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+        <property name="maxInactiveIntervalInSeconds" value="${session.timeout.insecond}"/>
+
+    </bean>
     <bean id="lettuceConnectionFactory"
           class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory"
           p:hostName="${redis.config.service1.host}" p:port="${redis.config.service1.port}"
           p:validateConnection="true" p:useSsl="false" p:shareNativeConnection="true"
-    />
+    >
+    </bean>
+
 
     <bean id="redisTemplate"
           class="org.springframework.data.redis.core.RedisTemplate"
