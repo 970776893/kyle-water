@@ -7,5 +7,5 @@
 
     <import resource="classpath:spring/applicationContext.xml"></import>
     <import resource="classpath:spring/application-dao.xml"></import>
-
+    <import resource="classpath:spring/spring-session.xml"></import>
 </beans>

@@ -52,6 +52,18 @@
         <url-pattern>/druid/*</url-pattern>
     </servlet-mapping>
 
+
+    <filter>
+        <filter-name>springSessionRepositoryFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSessionRepositoryFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
     <!--加载环境-->
     <servlet>
         <servlet-name>spring</servlet-name>
@@ -66,6 +78,11 @@
         <servlet-name>spring</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
+
+    <session-config>
+        <!--分钟为单位-->
+        <session-timeout>30</session-timeout>
+    </session-config>
 
     <error-page>
         <error-code>500</error-code>

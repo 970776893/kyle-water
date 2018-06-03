@@ -1,12 +1,10 @@
 package com.kyle.framework.service.impl;
 
 
-import com.kyle.framework.annotation.SystemLog;
 import com.kyle.framework.dao.IBaseDao;
 import com.kyle.framework.entity.BaseEntity;
 import com.kyle.framework.exception.KyleExceptioin;
 import com.kyle.framework.model.Page;
-import com.kyle.framework.model.ModelResult;
 import com.kyle.framework.service.IBaseService;
 import com.kyle.framework.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;

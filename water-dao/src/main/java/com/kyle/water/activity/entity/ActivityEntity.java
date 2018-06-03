@@ -2,7 +2,6 @@ package com.kyle.water.activity.entity;
 
 import com.kyle.framework.entity.BaseEntity;
 import lombok.Data;
-import sun.jvm.hotspot.types.basic.BasicOopField;
 
 /**
  *
