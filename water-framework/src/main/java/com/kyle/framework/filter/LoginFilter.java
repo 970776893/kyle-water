@@ -41,47 +41,46 @@ public class LoginFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        boolean filter = doFilter(httpServletRequest);
-        if(!filter){
+        boolean filter = isDoFilter(httpServletRequest);
+        if (!filter) {
             log.info("未登录");
             ModelResult<String> noLoginResult = new ModelResult<>("未登录/登录已失效");
             noLoginResult.setCode(ReturnCodeEnum.NO_LOGIN.code);
             String message = JSON.toJSON(noLoginResult).toString();
             httpServletResponse.getOutputStream().write(message.getBytes(httpServletResponse.getCharacterEncoding()));
             httpServletResponse.setContentType("application/json");
-        }else{
+        } else {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
     }
 
-    private boolean doFilter(HttpServletRequest httpServletRequest) {
+    private boolean isDoFilter(HttpServletRequest httpServletRequest) {
         boolean isExclude = exculded(httpServletRequest);
-        if(isExclude) {
+        if (isExclude) {
             return true;
         }
         boolean isLogined = loggined(httpServletRequest);
-        if(isLogined) {
+        if (isLogined) {
             return true;
         }
         return false;
     }
 
 
-
     private boolean loggined(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
-        Object userCode = session.getAttribute(Constants.LOGIN_SESSION_ATTRIBUTE_KEY);
-        return userCode != null;
+        Object userInfo = session.getAttribute(Constants.LOGIN_SESSION_ATTRIBUTE_KEY);
+        return userInfo != null;
     }
 
     private boolean exculded(HttpServletRequest httpServletRequest) {
-        if(CollectionUtils.isEmpty(excludeFilters)) {
+        if (CollectionUtils.isEmpty(excludeFilters)) {
             return false;
         }
         String servletPath = httpServletRequest.getServletPath();
-        for(String excludeFileter : excludeFilters){
+        for (String excludeFileter : excludeFilters) {
             boolean isMatch = PatternMatchUtils.simpleMatch(excludeFileter, servletPath);
-            if(isMatch) {
+            if (isMatch) {
                 return true;
             }
 

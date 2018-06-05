@@ -7,5 +7,5 @@ public class Constants {
     /**
      * 登录设置key
      */
-    public static String LOGIN_SESSION_ATTRIBUTE_KEY = "userCode";
+    public static String LOGIN_SESSION_ATTRIBUTE_KEY = "login.user.info";
 }

@@ -5,9 +5,11 @@ import com.kyle.framework.annotation.SystemLog;
 import com.kyle.framework.dao.IBaseDao;
 import com.kyle.framework.entity.BaseEntity;
 import com.kyle.framework.exception.KyleExceptioin;
+import com.kyle.framework.model.LoginUserInfo;
 import com.kyle.framework.model.Page;
 import com.kyle.framework.model.ModelResult;
 import com.kyle.framework.service.IBaseService;
+import com.kyle.framework.utils.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -132,5 +134,14 @@ public abstract class IBaseControllor<E extends BaseEntity, F extends IBaseDao<E
             log.error("查询异常", e);
         }
         return result;
+    }
+
+    /**
+     * 获取登录用户的信息
+     * @return 用户信息 ，如果获取不到返回null
+     */
+    public LoginUserInfo getLoginUserInfo(){
+        LoginUserInfo userInfo = (LoginUserInfo) request.getSession().getAttribute(Constants.LOGIN_SESSION_ATTRIBUTE_KEY);
+        return userInfo;
     }
 }
