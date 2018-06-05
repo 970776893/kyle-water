@@ -75,6 +75,10 @@
     <filter>
         <filter-name>loginFilter</filter-name>
         <filter-class>com.kyle.framework.filter.LoginFilter</filter-class>
+        <init-param>
+            <param-name>excludeConfigLocation</param-name>
+            <param-value>classpath:properties/login-exclude.properties</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>loginFilter</filter-name>
@@ -95,11 +99,6 @@
         <servlet-name>spring</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
-
-    <session-config>
-        <!--分钟为单位-->
-        <session-timeout>1</session-timeout>
-    </session-config>
 
     <error-page>
         <error-code>500</error-code>
