@@ -1,10 +1,12 @@
 package com.kyle.framework.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.kyle.framework.model.LoginUserInfo;
 import com.kyle.framework.model.ModelResult;
 import com.kyle.framework.model.ReturnCodeEnum;
 import com.kyle.framework.utils.Constants;
 import com.kyle.framework.utils.PatternMatchUtils;
+import com.kyle.framework.utils.UserInfoUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ResourceUtils;
@@ -50,8 +52,18 @@ public class LoginFilter extends OncePerRequestFilter {
             httpServletResponse.getOutputStream().write(message.getBytes(httpServletResponse.getCharacterEncoding()));
             httpServletResponse.setContentType("application/json");
         } else {
+            awareLoginUserInfo(httpServletRequest);
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
+    }
+
+    private void awareLoginUserInfo(HttpServletRequest httpServletRequest) {
+        //记录登录用户
+        LoginUserInfo userInfo = getLoginUserInfo(httpServletRequest);
+        if(userInfo == null) {
+            return;
+        }
+        UserInfoUtils.cacheLoginUser(userInfo);
     }
 
     private boolean isDoFilter(HttpServletRequest httpServletRequest) {
@@ -59,18 +71,18 @@ public class LoginFilter extends OncePerRequestFilter {
         if (isExclude) {
             return true;
         }
-        boolean isLogined = loggined(httpServletRequest);
-        if (isLogined) {
+        LoginUserInfo userInfo = getLoginUserInfo(httpServletRequest);
+        if (userInfo != null) {
             return true;
         }
         return false;
     }
 
 
-    private boolean loggined(HttpServletRequest httpServletRequest) {
+    private LoginUserInfo getLoginUserInfo(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
-        Object userInfo = session.getAttribute(Constants.LOGIN_SESSION_ATTRIBUTE_KEY);
-        return userInfo != null;
+        LoginUserInfo userInfo = (LoginUserInfo) session.getAttribute(Constants.LOGIN_SESSION_ATTRIBUTE_KEY);
+        return userInfo;
     }
 
     private boolean exculded(HttpServletRequest httpServletRequest) {
@@ -83,7 +95,6 @@ public class LoginFilter extends OncePerRequestFilter {
             if (isMatch) {
                 return true;
             }
-
         }
         return false;
     }

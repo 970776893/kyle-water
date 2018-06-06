@@ -135,13 +135,4 @@ public abstract class IBaseControllor<E extends BaseEntity, F extends IBaseDao<E
         }
         return result;
     }
-
-    /**
-     * 获取登录用户的信息
-     * @return 用户信息 ，如果获取不到返回null
-     */
-    public LoginUserInfo getLoginUserInfo(){
-        LoginUserInfo userInfo = (LoginUserInfo) request.getSession().getAttribute(Constants.LOGIN_SESSION_ATTRIBUTE_KEY);
-        return userInfo;
-    }
 }

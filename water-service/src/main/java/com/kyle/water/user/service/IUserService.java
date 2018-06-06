@@ -31,6 +31,6 @@ public interface IUserService  extends IBaseService< IUserDao, UserEntity>{
      * @param password 明文密码
      * @return 返回匹配的用户信息
      */
-    UserEntity matchUserCodeAndPassword(String loginCode, String password);
+    UserEntity getByLoginCodeCodeAndPassword(String loginCode, String password);
 
 }

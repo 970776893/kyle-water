@@ -7,7 +7,7 @@ import com.kyle.framework.utils.Valids;
 import com.kyle.water.user.dao.IUserDao;
 import com.kyle.water.user.entity.UserEntity;
 import com.kyle.water.user.service.IUserService;
-import com.kyle.water.utils.PasswordUtils;
+import com.kyle.framework.utils.UserInfoUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -32,14 +32,15 @@ public class UserServiceImpl extends BaseServiceImpl<IUserDao, UserEntity> imple
     }
 
     @Override
-    public UserEntity matchUserCodeAndPassword(String loginCode, String password) {
+    public UserEntity getByLoginCodeCodeAndPassword(String loginCode, String password) {
         Valids.requireNonEmpty(loginCode, "登录名为空");
         Valids.requireNonEmpty(password, "密码为空");
         UserEntity user = getByLogincode(loginCode);
         if (user == null) {
+            log.warn("登录失败：loginCode:{}", loginCode);
             return null;
         }
-        String encryPassword = PasswordUtils.encryPassword(password, user.getMobile());
+        String encryPassword = UserInfoUtils.encryPassword(password, user.getMobile());
         boolean isMatch = encryPassword.equals(user.getPassword());
         return isMatch ? user : null;
     }
@@ -68,7 +69,7 @@ public class UserServiceImpl extends BaseServiceImpl<IUserDao, UserEntity> imple
     }
 
     private void init4Create(UserEntity userEntity) {
-        String encryPasword = PasswordUtils.encryPassword(userEntity.getPassword(), userEntity.getMobile());
+        String encryPasword = UserInfoUtils.encryPassword(userEntity.getPassword(), userEntity.getMobile());
         userEntity.setPassword(encryPasword);
     }
 

@@ -44,7 +44,7 @@ public class LoginController {
     public ModelResult<String> login(@RequestParam String loginCode, @RequestParam String password) {
         ModelResult<String> result = new ModelResult<>("请求成功");
         try {
-            UserEntity userEntity = userService.matchUserCodeAndPassword(loginCode, password);
+            UserEntity userEntity = userService.getByLoginCodeCodeAndPassword(loginCode, password);
             if (userEntity == null) {
                 throw new KyleExceptioin("用户名或密码错误");
             }

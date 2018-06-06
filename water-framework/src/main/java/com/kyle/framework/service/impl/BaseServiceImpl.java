@@ -4,9 +4,11 @@ package com.kyle.framework.service.impl;
 import com.kyle.framework.dao.IBaseDao;
 import com.kyle.framework.entity.BaseEntity;
 import com.kyle.framework.exception.KyleExceptioin;
+import com.kyle.framework.model.LoginUserInfo;
 import com.kyle.framework.model.Page;
 import com.kyle.framework.service.IBaseService;
 import com.kyle.framework.utils.PageUtils;
+import com.kyle.framework.utils.UserInfoUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,7 +54,7 @@ public abstract class BaseServiceImpl<T extends IBaseDao<E>, E extends BaseEntit
     @Override
     @Transactional
     public void batchInsert(List<E> list) {
-        for(E item: list) {
+        for (E item : list) {
             handlerCreateUser(item);
             item.setIsDel(false);
         }
@@ -63,11 +65,12 @@ public abstract class BaseServiceImpl<T extends IBaseDao<E>, E extends BaseEntit
     @Override
     @Transactional
     public void modifyById(E item) {
+        handlerUpdateUser(item);
         dao.updateSelectiveById(item);
     }
 
     @Override
-    public Page<E> getPage(Map<String, Object> param){
+    public Page<E> getPage(Map<String, Object> param) {
         PageUtils.handlerPage(param);
         Integer total = getCount(param);
         List<E> list = getPageList(param);
@@ -123,10 +126,11 @@ public abstract class BaseServiceImpl<T extends IBaseDao<E>, E extends BaseEntit
 
     /**
      * 查询的最大条目限制
+     *
      * @param params
      * @throws KyleExceptioin
      */
-    protected void hendleListMax(Map<String, Object> params){
+    protected void hendleListMax(Map<String, Object> params) {
         //默认分页查询
         Integer count = PageUtils.getPageSize(params);
         if (count == null) {
@@ -134,16 +138,24 @@ public abstract class BaseServiceImpl<T extends IBaseDao<E>, E extends BaseEntit
             count = dao.countByParams(params);
         }
 
-        if(count > singleQueryMaxLength) {
+        if (count > singleQueryMaxLength) {
             throw new KyleExceptioin("查询数量太多");
         }
     }
 
-    //TODO 登录模块还未做好，暂时是使用system
     protected void handlerCreateUser(BaseEntity item) {
         item.setCreateAt(System.currentTimeMillis());
-        item.setCreateBy("system");
-        item.setCreateName("system");
+        LoginUserInfo loginUser = UserInfoUtils.getLoginUserForce();
+        item.setCreateBy(loginUser.getUserCode());
+        item.setCreateName(loginUser.getUserName());
+    }
+
+
+    protected void handlerUpdateUser(BaseEntity item) {
+        item.setUpdateAt(System.currentTimeMillis());
+        LoginUserInfo loginUser = UserInfoUtils.getLoginUserForce();
+        item.setUpdateBy(loginUser.getUserCode());
+        item.setUpdateName(loginUser.getUserName());
     }
 
 }
