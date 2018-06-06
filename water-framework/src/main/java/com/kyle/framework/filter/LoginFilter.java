@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.kyle.framework.model.ModelResult;
 import com.kyle.framework.model.ReturnCodeEnum;
 import com.kyle.framework.utils.Constants;
+import com.kyle.framework.utils.PatternMatchUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.PatternMatchUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -79,7 +79,7 @@ public class LoginFilter extends OncePerRequestFilter {
         }
         String servletPath = httpServletRequest.getServletPath();
         for (String excludeFileter : excludeFilters) {
-            boolean isMatch = PatternMatchUtils.simpleMatch(excludeFileter, servletPath);
+            boolean isMatch = PatternMatchUtils.match(excludeFileter, servletPath);
             if (isMatch) {
                 return true;
             }

@@ -91,7 +91,7 @@ public class Freemark {
         File outFile = new File(pathPath);
         if(outFile.exists()) {
             Scanner scan = new Scanner(System.in);
-            System.out.print("文件(" + outFile.getAbsolutePath() + ")已存在.\n请输入命令：1-覆盖，2-取消 :");
+            System.out.print("文件(" + outFile.getAbsolutePath() + ")已存在.\n请输入命令：1-忽略，2-覆盖 :");
            do{
                String command = scan.nextLine();
                if("1".equals(command)){

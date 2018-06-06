@@ -81,6 +81,36 @@
         )
     </insert>
 
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into test (
+    <trim suffix="" suffixOverrides=",">
+            `name`,
+            `create_at`,
+            `create_by`,
+            `create_name`,
+            `update_at`,
+            `update_by`,
+            `update_name`,
+            `is_del`,
+    </trim>
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+        <trim suffix="" suffixOverrides=",">
+            #{name, jdbcType=VARCHAR},
+            #{createAt, jdbcType=BIGINT},
+            #{createBy, jdbcType=VARCHAR},
+            #{createName, jdbcType=VARCHAR},
+            #{updateAt, jdbcType=BIGINT},
+            #{updateBy, jdbcType=VARCHAR},
+            #{updateName, jdbcType=VARCHAR},
+            #{isDel, jdbcType=BOOLEAN},
+        </trim>
+            )
+        </foreach>
+    </insert>
+
     <insert id="insertSelective" parameterType="com.kyle.water.test.entity.TestEntity" useGeneratedKeys="true" keyProperty="id">
         insert into test (
             <trim suffix="" suffixOverrides=",">

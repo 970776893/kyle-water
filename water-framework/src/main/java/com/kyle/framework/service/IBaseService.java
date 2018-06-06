@@ -32,4 +32,7 @@ public interface IBaseService<T extends IBaseDao<E>, E extends BaseEntity> {
 
     List<E> getList(Map<String, Object> param) throws KyleExceptioin;
 
+    List<E> getByField(String filedName, Object value);
+
+    E getSingleByField(String filedName, Object value);
 }

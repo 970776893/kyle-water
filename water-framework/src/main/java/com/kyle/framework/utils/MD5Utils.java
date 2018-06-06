@@ -1,7 +1,6 @@
 package com.kyle.framework.utils;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -10,16 +9,8 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Created by zhangkai on 3/30/16.
  */
+@Log4j2
 public class MD5Utils {
-    static Log logger =  LogFactory.getLog(MD5Utils.class);
-
-    public static void main(String[] args) {
-        String md5 = md5Sum("123456");
-        System.out.println(md5);
-        md5 += "0000";
-        System.out.println(md5);
-        System.out.println(md5Sum(md5));
-    }
 
     private static char[] Digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'a', 'b', 'c', 'd', 'e', 'f'};
@@ -37,7 +28,7 @@ public class MD5Utils {
             md5 = MessageDigest.getInstance("MD5");
             md5.update(str.getBytes("UTF-8"));
         } catch (NoSuchAlgorithmException e) {
-            logger.error("", e);
+            log.error("", e);
             throw new RuntimeException(e.getMessage());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

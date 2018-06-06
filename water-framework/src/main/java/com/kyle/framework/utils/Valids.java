@@ -36,6 +36,12 @@ public class Valids {
         }
     }
 
+    public static void requireTrue(boolean obj, String message){
+        if(!obj) {
+            throw new KyleExceptioin(message);
+        }
+    }
+
     public static void requireGreater(Long o1, Long o2, String message){
         if(o1 <= o2) {
             throw new KyleExceptioin(message);

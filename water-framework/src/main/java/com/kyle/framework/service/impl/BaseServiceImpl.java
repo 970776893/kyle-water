@@ -7,16 +7,20 @@ import com.kyle.framework.exception.KyleExceptioin;
 import com.kyle.framework.model.Page;
 import com.kyle.framework.service.IBaseService;
 import com.kyle.framework.utils.PageUtils;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by zhangkai on 16-2-23.
  */
+@Log4j2
 public abstract class BaseServiceImpl<T extends IBaseDao<E>, E extends BaseEntity> implements IBaseService<T, E> {
 
     @Autowired
@@ -91,6 +95,30 @@ public abstract class BaseServiceImpl<T extends IBaseDao<E>, E extends BaseEntit
     public List<E> getList(Map<String, Object> param) {
         hendleListMax(param);
         return dao.listByParams(param);
+    }
+
+    @Override
+    public List<E> getByField(String filedName, Object value) {
+        Map<String, Object> param = new HashMap<>();
+        param.put(filedName, value);
+        return getList(param);
+    }
+
+    @Override
+    public E getSingleByField(String filedName, Object value) {
+        Map<String, Object> param = new HashMap<>();
+        param.put(filedName, value);
+        List<E> list = getList(param);
+        if (CollectionUtils.isEmpty(list)) {
+            log.info("查询不存在 filedName：{} value:{}", filedName, value);
+            return null;
+        }
+        if (list.size() > 1) {
+            log.error("不唯一 filedName：{} value:{}", filedName, value);
+            throw new KyleExceptioin("唯一性不符合");
+        }
+
+        return list.get(0);
     }
 
     /**

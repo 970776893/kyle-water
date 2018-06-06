@@ -82,9 +82,9 @@ public abstract class IBaseControllor<E extends BaseEntity, F extends IBaseDao<E
         return result;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    @SystemLog(description = "更新内容")
+//    @ResponseBody
+//    @RequestMapping(value = "update", method = RequestMethod.POST)
+//    @SystemLog(description = "更新内容")
     public ModelResult<String> update(@RequestBody E item) {
         ModelResult<String> result = new ModelResult<>("更新成功");
         try {
@@ -99,9 +99,9 @@ public abstract class IBaseControllor<E extends BaseEntity, F extends IBaseDao<E
         return result;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "insert", method = RequestMethod.POST)
-    @SystemLog(description = "新增内容")
+//    @ResponseBody
+//    @RequestMapping(value = "insert", method = RequestMethod.POST)
+//    @SystemLog(description = "新增内容")
     public ModelResult<Long> insert(@RequestBody E item) {
         ModelResult<Long> result = new ModelResult<>("新增成功");
         try {
