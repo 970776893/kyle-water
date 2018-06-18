@@ -19,7 +19,7 @@ public class PageUtils {
 
     private static int PAGE_NO_DEFAULT = 1;
 
-    private static int page_size_default = 15;
+    private static int PAGE_SIZE_DEFAULT = 15;
 
     private static String LIMIT_OFFSET_FILE_DEFINITION = "offset";
 
@@ -39,9 +39,20 @@ public class PageUtils {
         //默认值
         if (!params.containsKey(PAGE_NO_FIELD_DEFINATION)) {
             params.put(PAGE_NO_FIELD_DEFINATION, PAGE_NO_DEFAULT);
+        } else {
+            Object pageNoObj = params.get(PAGE_NO_FIELD_DEFINATION);
+            if(pageNoObj instanceof String) {
+                params.put(PAGE_NO_FIELD_DEFINATION, Integer.valueOf((String) pageNoObj));
+            }
         }
+
         if (!params.containsKey(PAGE_SIZE_FIELD_DEFINATION)) {
-            params.put(PAGE_SIZE_FIELD_DEFINATION, page_size_default);
+            params.put(PAGE_SIZE_FIELD_DEFINATION, PAGE_SIZE_DEFAULT);
+        }else {
+            Object pageSizeObj = params.get(PAGE_SIZE_FIELD_DEFINATION);
+            if(pageSizeObj instanceof String) {
+                params.put(PAGE_SIZE_FIELD_DEFINATION, Integer.valueOf((String) pageSizeObj));
+            }
         }
 
         //设置参数

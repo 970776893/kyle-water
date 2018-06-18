@@ -57,7 +57,7 @@ public class UserServiceImpl extends BaseServiceImpl<IUserDao, UserEntity> imple
         Valids.requireNonNull(userEntity, "参数不合法");
         Valids.requireTrue(PatternMatchUtils.matchPassword(userEntity.getPassword()), "密码不合法:6-21字母和数字组成，不能是纯数字或纯英文");
         Valids.requireTrue(PatternMatchUtils.matchMobile(userEntity.getMobile()), "手机号不合法");
-        Valids.requireTrue(PatternMatchUtils.matchUserCode(userEntity.getUserCode()), "登录登录账号不合法:长度为6~20，包含字母、数字、@、.、_");
+        Valids.requireTrue(PatternMatchUtils.matchUserCode(userEntity.getUserCode()), "登录登录账号不合法:长度为6~20，首位为字母，包含字母、数字、@、.、_");
         Valids.requireTrue(PatternMatchUtils.matchUserName(userEntity.getUserName()), "姓名合法：长度为2~20");
         Valids.requireTrue(PatternMatchUtils.matchMobile(userEntity.getMobile()), "手机号不合法");
         //用户名不重复

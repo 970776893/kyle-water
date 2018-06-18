@@ -83,9 +83,9 @@ public class PatternMatchUtils {
         public static String USERNAME_PATTERN = "^[\\S]{2,20}$";
 
         /**
-         * 长度为6~20，包含字母、数字、@、.、_
+         * 长度为6~20，首位为字母，包含字母、数字、@、.、_
          */
-        public static String USECODE_PATTERN = "^[0-9A-Za-z_@.]{6,20}$";
+        public static String USECODE_PATTERN = "^[A-Za-z]{1}[0-9A-Za-z_@.]{5,19}$";
 
         /**
          *
